@@ -52,12 +52,50 @@ These can be installed using: `pip install -r requirements.txt`
     ```
 3.  A new tab will open in your web browser with the application.  Upload a PDF and start asking questions!
 
-## Project Structure
-rag-pdf-qa/ (or your project's name)
-├── app.py # Streamlit web interface
-├── preprocessing.py # PDF preprocessing (OCR) and text extraction
-├── rag.py # RAG service (chunking, embedding, retrieval)
-├── summarization.py # Text summarization
-├── requirements.txt # Project dependencies
-├── .env # API Key (DO NOT COMMIT THIS TO GITHUB)
-└── README.md # This file
+
+## Design Choices
+
+*   **OCR:** Gemini's `gemini-1.5-flash` model is used with image input (via PIL) for accurate text extraction, even from scanned PDFs.
+*   **Chunking:** A sliding window approach is used, with a `chunk_size` of 500 characters and an `overlap` of 50 characters.
+*   **Vector Database:** ChromaDB is used in-memory for storing and retrieving text chunks.
+*   **LLM:**  Gemini (`gemini-1.5-flash`) is used consistently for OCR, summarization, and answer generation.
+*   **Caching:** Streamlit's `@st.cache_resource` and `@st.cache_data` are used extensively to improve performance:
+    *   The OCR processing (which is slow) is cached based on the *content* of the uploaded file.  This prevents unnecessary re-processing if the same file is uploaded again.
+    *   The `RAGService` is cached based on a unique hash of the file content. This ensures that a new `RAGService` (and a new ChromaDB collection) is created for each *different* file, while still benefiting from caching for the same file.
+* **Prompt Engineering:**
+    *   **OCR Prompt:** `"Extract all the text from this image:"`
+    *   **Summarization Prompt:**  `"Summarize the following text in a concise and informative way, capturing the main points:"`
+    *   **RAG Prompt:**
+        ```
+        Answer the following question based on the context provided:
+        Question: {query}
+        Context:
+        {context}
+
+        If the answer cannot be found in the context, respond with 'I am sorry, but I don't have enough information to answer that question from the context I was given.'
+        ```
+
+## Sample Interaction
+
+**(After uploading "The_Gift_of_the_Magi.pdf")**
+
+**Question:** What did Della sell to buy Jim a gift?
+**Answer:** Della sold her hair to buy Jim a gift.
+
+**Question:** What is the capital of France?
+**Answer:** I am sorry, but I don't have enough information to answer that question from the context I was given.
+
+## Error Handling
+Basic Error Handling is implemented.
+
+## RAG Implementation
+
+1.  **PDF Upload and OCR:** The user uploads a PDF.  The `preprocessing.py` module uses `fitz` (PyMuPDF) and Gemini to extract the text, page by page.
+2.  **Text Chunking:** The extracted text is split into smaller, overlapping chunks using a sliding window.
+3.  **Embedding Generation:**  The `sentence-transformers` library (`all-MiniLM-L6-v2` model) creates embeddings for each text chunk.
+4.  **Vector Storage:** The chunks and their embeddings are stored in a ChromaDB collection.
+5.  **Question Processing:** When the user asks a question:
+    *   The question is converted into an embedding.
+    *   ChromaDB is queried to find the most relevant chunks (based on embedding similarity).
+    *   The relevant chunks are combined to form a context.
+    *   The question and context are sent to Gemini, which generates the answer.
