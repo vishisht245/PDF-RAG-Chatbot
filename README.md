@@ -99,16 +99,27 @@ These can be installed using: `pip install -r requirements.txt`
 *   **Caching:** Streamlit's `@st.cache_resource` and `@st.cache_data` are used extensively to improve performance:
     *   The OCR processing (which is slow) is cached based on the *content* of the uploaded file.  This prevents unnecessary re-processing if the same file is uploaded again.
     *   The `RAGService` is cached based on a unique hash of the file content. This ensures that a new `RAGService` (and a new ChromaDB collection) is created for each *different* file, while still benefiting from caching for the same file.
+## Usage
 
-## Sample Interaction
+1.  **Upload a PDF:** Use the "Choose a PDF file" button.
 
-**(After uploading "The_Gift_of_the_Magi.pdf")**
+    ![Screenshot of the file upload interface](images/Upload_interface.png)
 
-**Question:** What did Della sell to buy Jim a gift?
-**Answer:** Della sold her hair to buy Jim a gift.
+2.  **Ask a Question:** Enter your question in the text box.
 
-**Question:** What is the capital of France?
-**Answer:** I am sorry, but I don't have enough information to answer that question from the context I was given.
+    **(Example using "The_Gift_of_the_Magi.pdf")**
+
+    **Example 1 (In-Context):**
+
+    ![Screenshot of in context question](images/Question_on_jim.png)
+
+    **Question:** What gift did Della give to Jim?
+
+    **Example 2 (Out-of-Context):**
+
+    ![Screenshot of out of context question](images/Out_of_context_question.png)
+
+    **Question:** What is the capital of India?
 
 ## Error Handling
 Basic Error Handling is implemented.
