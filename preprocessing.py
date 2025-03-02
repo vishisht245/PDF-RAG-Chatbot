@@ -1,5 +1,4 @@
-# preprocessing.py
-import fitz  # PyMuPDF
+import fitz  
 import google.generativeai as genai
 import os
 import dotenv
