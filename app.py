@@ -1,4 +1,3 @@
-# app.py
 import streamlit as st
 from rag import RAGService
 from summarization import generate_summary
@@ -23,7 +22,7 @@ def generate_file_key(uploaded_file):
             return None  # Return None on error
     return None
 
-# Function to handle file upload and processing, NOW CACHED
+# Function to handle file upload and processing
 @st.cache_data()
 def process_uploaded_file(uploaded_file):
     if uploaded_file is not None:
@@ -51,14 +50,14 @@ uploaded_file = st.file_uploader("Choose a PDF file", type="pdf")
 file_key = generate_file_key(uploaded_file)  # Get the unique file key
 text = process_uploaded_file(uploaded_file)  # Get extracted text
 
-# Use st.cache_resource with a key based on the file.
+# st.cache_resource with a key based on the file.
 @st.cache_resource(show_spinner=False)
-def get_rag_service(key):  # Only the KEY is needed now
+def get_rag_service(key):  
     if key is not None:
         try:
             text = process_uploaded_file(uploaded_file)
             if text:
-              return RAGService(text) # Create a NEW RAGService here
+              return RAGService(text) 
             return None
         except Exception as e:
             logging.error(f"Error initializing RAGService: {e}")
@@ -87,8 +86,8 @@ if file_key:
                 except Exception as e:
                     logging.error(f"Error generating answer: {e}")
                     st.error("An error occurred while generating the answer.")
-        elif text:  # NEW: Check if text exists, then if query is empty
-            st.write("Please enter a question to ask.") # Specific message
+        elif text:  # Check if text exists, then if query is empty
+            st.write("Please enter a question to ask.") 
 
     else:
       st.write("RAG service initialization failed.")
