@@ -25,18 +25,25 @@ This project implements a Retrieval-Augmented Generation (RAG) system that allow
 These can be installed using: `pip install -r requirements.txt`
 
 ## Setup
+1.  Clone this repository:
 
-1.  **Install Dependencies:**
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git](https://github.com/vishisht245/PDF-RAG-Chatbot.git
+    cd PDF-RAG-Chatbot
+    ```
+    **Replace `YOUR_USERNAME` and `YOUR_REPOSITORY_NAME` with your actual GitHub username and the name of your repository.**  This is *crucially important*.
+
+2.  **Install Dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-2.  **Obtain a Google Gemini API Key:**
+3.  **Obtain a Google Gemini API Key:**
     *   Go to [Google AI Studio](https://ai.google.dev/).
     *   Create a new project (or use an existing one).
     *   Create an API Key.
 
-3.  **Set the API Key:**
+4.  **Set the API Key:**
     *   Create a `.env` file in the project's root directory:
         ```
         GOOGLE_API_KEY="your-api-key-here"
@@ -62,18 +69,6 @@ These can be installed using: `pip install -r requirements.txt`
 *   **Caching:** Streamlit's `@st.cache_resource` and `@st.cache_data` are used extensively to improve performance:
     *   The OCR processing (which is slow) is cached based on the *content* of the uploaded file.  This prevents unnecessary re-processing if the same file is uploaded again.
     *   The `RAGService` is cached based on a unique hash of the file content. This ensures that a new `RAGService` (and a new ChromaDB collection) is created for each *different* file, while still benefiting from caching for the same file.
-* **Prompt Engineering:**
-    *   **OCR Prompt:** `"Extract all the text from this image:"`
-    *   **Summarization Prompt:**  `"Summarize the following text in a concise and informative way, capturing the main points:"`
-    *   **RAG Prompt:**
-        ```
-        Answer the following question based on the context provided:
-        Question: {query}
-        Context:
-        {context}
-
-        If the answer cannot be found in the context, respond with 'I am sorry, but I don't have enough information to answer that question from the context I was given.'
-        ```
 
 ## Sample Interaction
 
