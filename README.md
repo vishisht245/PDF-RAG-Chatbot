@@ -25,23 +25,55 @@ This project implements a Retrieval-Augmented Generation (RAG) system that allow
 These can be installed using: `pip install -r requirements.txt`
 
 ## Setup
-1.  Clone this repository:
+
+1.  **Clone the repository:**
 
     ```bash
     git clone https://github.com/vishisht245/PDF-RAG-Chatbot.git
     cd PDF-RAG-Chatbot
     ```
-2.  **Install Dependencies:**
+
+2.  **Create a virtual environment (recommended):**
+
+    It's highly recommended to use a virtual environment to manage your project's dependencies. This isolates your project's dependencies from other Python projects and your system-wide Python installation.
+
+    *   **Using `venv` (built-in, Python 3.3+):**
+
+        ```bash
+        python3 -m venv .venv
+        ```
+
+        This creates a virtual environment named `.venv` in your project's root directory.
+
+    *   **Activating the virtual environment:**
+
+        *   **On Linux/macOS:**
+            ```bash
+            source .venv/bin/activate
+            ```
+
+        *   **On Windows (Command Prompt):**
+            ```bash
+            .venv\Scripts\activate
+            ```
+
+        *   **On Windows (PowerShell):**
+            ```bash
+            .venv\Scripts\Activate.ps1
+            ```
+
+        After activating, you should see `(.venv)` (or your environment's name) at the beginning of your terminal prompt.
+
+3.  **Install Dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
-
-3.  **Obtain a Google Gemini API Key:**
+4.  **Obtain a Google Gemini API Key:**
     *   Go to [Google AI Studio](https://ai.google.dev/).
     *   Create a new project (or use an existing one).
     *   Create an API Key.
 
-4.  **Set the API Key:**
+5.  **Set the API Key:**
     *   Create a `.env` file in the project's root directory:
         ```
         GOOGLE_API_KEY="your-api-key-here"
@@ -49,13 +81,13 @@ These can be installed using: `pip install -r requirements.txt`
         Replace `"your-api-key-here"` with your actual API key.
 
 ## Running the Application
-
 1.  Make sure you are in your virtual environment (activate it if necessary).
 2.  Run the Streamlit app:
     ```bash
     streamlit run app.py
     ```
 3.  A new tab will open in your web browser with the application.  Upload a PDF and start asking questions!
+
 
 
 ## Design Choices
