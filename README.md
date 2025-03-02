@@ -31,8 +31,6 @@ These can be installed using: `pip install -r requirements.txt`
     git clone https://github.com/vishisht245/PDF-RAG-Chatbot.git
     cd PDF-RAG-Chatbot
     ```
-    **Replace `YOUR_USERNAME` and `YOUR_REPOSITORY_NAME` with your actual GitHub username and the name of your repository.**  This is *crucially important*.
-
 2.  **Install Dependencies:**
     ```bash
     pip install -r requirements.txt
