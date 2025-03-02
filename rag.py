@@ -1,8 +1,7 @@
-# rag.py
 import google.generativeai as genai
 import os
 import dotenv
-from sentence_transformers import SentenceTransformer  # No 'exceptions'
+from sentence_transformers import SentenceTransformer  
 import chromadb
 import numpy as np
 import logging
