@@ -53,3 +53,11 @@ These can be installed using: `pip install -r requirements.txt`
 3.  A new tab will open in your web browser with the application.  Upload a PDF and start asking questions!
 
 ## Project Structure
+rag-pdf-qa/ (or your project's name)
+├── app.py # Streamlit web interface
+├── preprocessing.py # PDF preprocessing (OCR) and text extraction
+├── rag.py # RAG service (chunking, embedding, retrieval)
+├── summarization.py # Text summarization
+├── requirements.txt # Project dependencies
+├── .env # API Key (DO NOT COMMIT THIS TO GITHUB)
+└── README.md # This file
