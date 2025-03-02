@@ -99,6 +99,20 @@ These can be installed using: `pip install -r requirements.txt`
 *   **Caching:** Streamlit's `@st.cache_resource` and `@st.cache_data` are used extensively to improve performance:
     *   The OCR processing (which is slow) is cached based on the *content* of the uploaded file.  This prevents unnecessary re-processing if the same file is uploaded again.
     *   The `RAGService` is cached based on a unique hash of the file content. This ensures that a new `RAGService` (and a new ChromaDB collection) is created for each *different* file, while still benefiting from caching for the same file.
+ 
+
+*   **Prompt Engineering:**
+    *   **OCR Prompt:** `"Extract all the text from this image:"`
+    *   **Summarization Prompt:** `"Summarize the following text in a concise and informative way, capturing the main points:"`
+    *   **RAG Prompt:**
+        ```
+        Answer the following question based on the context provided but don't mention it, keep the tone friendly and warm and answer with confidence:
+        Question: {query}
+        Context:
+        {context}
+
+        If the answer cannot be found in the context, respond with 'I am sorry, but I don't have enough information to answer that question from the context I was given.'
+        
 ## Usage
 
 1.  **Upload a PDF:** Use the "Choose a PDF file" button.
